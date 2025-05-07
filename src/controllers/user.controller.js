@@ -7,22 +7,22 @@ class UserController extends BaseController {
         super(userService);
     }
 
-    // Kullanıcının kendi profilini getirme
+ 
     async getProfile(req, res) {
         try {
             const userId = req.user.id;
-            const user = await this.service.getById(userId);
+            const user = await this.getById(userId);
             return res.status(200).json(user);
         } catch (error) {
             return res.status(500).json({ message: error.message });
         }
     }
 
-    // Kullanıcının kendi profilini güncelleme
+   
     async updateProfile(req, res) {
         try {
             const userId = req.user.id;
-            const result = await this.service.update(userId, req.body);
+            const result = await this.update(userId, req.body);
             if (!result) {
                 return res.status(404).json({ message: 'User not found' });
             }
@@ -32,11 +32,11 @@ class UserController extends BaseController {
         }
     }
 
-    // Kullanıcının kendi hesabını silme
+
     async deleteProfile(req, res) {
         try {
             const userId = req.user.id;
-            const result = await this.service.delete(userId);
+            const result = await this.delete(userId);
             if (!result) {
                 return res.status(404).json({ message: 'User not found' });
             }
@@ -46,22 +46,22 @@ class UserController extends BaseController {
         }
     }
 
-    // Kullanıcının postlarını getirme
+
     async getUserPosts(req, res) {
         try {
             const userId = req.params.id;
-            const posts = await this.service.getUserPosts(userId);
+            const posts = await this.getUserPosts(userId);
             return res.status(200).json(posts);
         } catch (error) {
             return res.status(500).json({ message: error.message });
         }
     }
 
-    // Kullanıcı arama
+
     async searchUsers(req, res) {
         try {
             const { query } = req.query;
-            const users = await this.service.searchUsers(query);
+            const users = await this.searchUsers(query);
             return res.status(200).json(users);
         } catch (error) {
             return res.status(500).json({ message: error.message });

@@ -28,7 +28,6 @@ const Post = sequelize.define('Post', {
     timestamps: true
 });
 
-// Define associations
 Post.belongsTo(User, { foreignKey: 'userId' });
 User.hasMany(Post, { foreignKey: 'userId' });
 

@@ -1,10 +1,10 @@
 const Joi = require('joi');
 
-const createUser = {
+const create = {
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required().min(6),
-    name: Joi.string().required(),
+    username: Joi.string().required(),
   }),
 };
 
@@ -33,7 +33,7 @@ const deleteUser = {
 };
 
 module.exports = {
-  createUser,
+  create,
   login,
   updateUser,
   deleteUser,

@@ -3,6 +3,7 @@ const cors = require('cors');
 const userRoutes = require('./routes/user.routes');
 const postRoutes = require('./routes/post.routes');
 const authRoutes = require('./routes/auth.routes');
+const CustomError = require('./utils/customError');
 
 const app = express();
 
@@ -14,13 +15,16 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
 
-// Error handling middleware
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({ message: 'Something went wrong!' });
-});
 
-// 404 handler
+    if (err instanceof CustomError) {
+        return res.status(err.statusCode).json({
+            message: err.message,  
+            status: err.statusCode, 
+        });
+    }
+}),
+
 app.use((req, res) => {
     res.status(404).json({ message: 'Route not found' });
 });

@@ -9,7 +9,7 @@ class PostService extends BaseService {
     }
 
     async getAll() {
-        return await this.model.findAll({
+        return await this.findAll({
             include: [{
                 model: User,
                 attributes: ['id', 'username', 'email']
@@ -18,7 +18,7 @@ class PostService extends BaseService {
     }
 
     async getById(id) {
-        return await this.model.findByPk(id, {
+        return await this.findByPk(id, {
             include: [{
                 model: User,
                 attributes: ['id', 'username', 'email']
