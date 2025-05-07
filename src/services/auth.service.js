@@ -31,28 +31,23 @@ class AuthService {
     }
 
     async register(userData) {
-        // Email kontrolü
         const existingUser = await userService.findByEmail(userData.email);
         if (existingUser) {
             throw new Error('Email already exists');
         }
 
-        // Username kontrolü
         const existingUsername = await userService.findByUsername(userData.username);
         if (existingUsername) {
             throw new Error('Username already exists');
         }
 
-        // Password'ü hashle
         const hashedPassword = await bcrypt.hash(userData.password, 10);
         
-        // Kullanıcıyı oluştur
         const user = await userService.create({
             ...userData,
             password: hashedPassword
         });
 
-        // Token oluştur
         const token = jwt.sign(
             { userId: user.id },
             JWT_SECRET,

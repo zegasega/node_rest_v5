@@ -5,15 +5,12 @@ const PORT = process.env.PORT || 3000;
 
 async function startServer() {
     try {
-        // Database bağlantısı
         await sequelize.authenticate();
         console.log('Database connection has been established successfully.');
         
-        // Database senkronizasyonu
         await sequelize.sync();
         console.log('Database synchronized successfully.');
 
-        // Server'ı başlat
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`);
         });
@@ -23,7 +20,6 @@ async function startServer() {
     }
 }
 
-// Graceful shutdown
 process.on('SIGTERM', () => {
     console.log('SIGTERM signal received: closing HTTP server');
     sequelize.close().then(() => {
