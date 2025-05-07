@@ -1,20 +1,40 @@
 const Joi = require('joi');
 
-const userValidation = {
-    create: Joi.object({
-        username: Joi.string().required().min(3).max(30),
-        email: Joi.string().required().email(),
-        password: Joi.string().required().min(6)
-    }),
-    update: Joi.object({
-        username: Joi.string().min(3).max(30),
-        email: Joi.string().email(),
-        password: Joi.string().min(6)
-    }),
-    login: Joi.object({
-        email: Joi.string().required().email(),
-        password: Joi.string().required()
-    })
+const createUser = {
+  body: Joi.object().keys({
+    email: Joi.string().required().email(),
+    password: Joi.string().required().min(6),
+    name: Joi.string().required(),
+  }),
 };
 
-module.exports = userValidation; 
+const login = {
+  body: Joi.object().keys({
+    email: Joi.string().required().email(),
+    password: Joi.string().required(),
+  }),
+};
+
+const updateUser = {
+  params: Joi.object().keys({
+    userId: Joi.number().required(),
+  }),
+  body: Joi.object().keys({
+    email: Joi.string().email(),
+    name: Joi.string(),
+    password: Joi.string().min(6),
+  }).min(1),
+};
+
+const deleteUser = {
+  params: Joi.object().keys({
+    userId: Joi.number().required(),
+  }),
+};
+
+module.exports = {
+  createUser,
+  login,
+  updateUser,
+  deleteUser,
+}; 
